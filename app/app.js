@@ -79,7 +79,7 @@ function CointRun(cointer){
 	var y = arrPathCoint[cointer][0][1];
 	let imgcoint = document.createElement("IMG");
 	//imgcoint.id = "coint0";//+cointer;
-	imgcoint.src ='pic/coint0.png';
+	imgcoint.src ='PIC/coint0.png';
     imgcoint.style.position = 'absolute';	
 	imgcoint.style.left = x+'px';
 	imgcoint.style.top = y+'px';
@@ -91,7 +91,7 @@ function CointRun(cointer){
 	setTimeout(function runcoint(){
 	if (i <= max)
 		{
-		imgcoint.src = "pic/coint"+i+".png";
+		imgcoint.src = "PIC/coint"+i+".png";
 		imgcoint.style.left = arrPathCoint[cointer][i][0]+'px';
 		imgcoint.style.top = arrPathCoint[cointer][i][1]+'px';
 		i++;
