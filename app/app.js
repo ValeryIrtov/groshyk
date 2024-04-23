@@ -3,8 +3,9 @@ var wallet = 3; // где кошелек 0-3
 var score = 0; //счетчик пойманных
 var badscore = 0; //счетчик не пойманных
 var lostcoint; //счетчик упавших
-var delayCoint = 500;
+var delayCoint = 300;
 var delayCounter =  5000;
+var soundOFF = 1; //0 sound off
 //var arrCounter = [0,0,0,0]; // массив с признаками, что машинка запущена.
 //var arrPathCoint = [[670,195],[670,200],[670,200],[670,200],[650,203],[630,205],[600,209],[575,215],[570,230]];
 var arrPathCoint = [
@@ -12,6 +13,13 @@ var arrPathCoint = [
 [[110,195],[110,195],[110,195],[110,195],[110,195],[110,200],[130,202],[165,208],[205,215],[220,235],[220,235]],
 [[670,195],[670,195],[670,195],[670,195],[670,195],[670,200],[650,202],[615,208],[575,215],[560,235],[560,235]],
 [[670,314],[670,314],[670,314],[670,314],[670,314],[670,319],[650,321],[615,327],[575,334],[560,354],[560,354]]];
+
+const audioCounter = new Audio("cash-counter-machine-count-50-bills-1.mp3");
+const audioCointRun = new Audio("coins-dropped-1_mkw1uzv_1.mp3");
+const audioCointPlus = new Audio("Moneta-sobrana.mp3");
+const audioCointLost = new Audio("Moneta-Upala.mp3");
+
+
 document.getElementById("Button3").onclick = function(){
 	document.getElementById("Groshyk").src = "PIC/LeftTop.png";
 	wallet = 2;
@@ -24,13 +32,24 @@ document.getElementById("Button1").onclick = function(){
 	document.getElementById('Groshyk').src = "PIC/RightDown.png";
 	wallet = 0;
 	};
+	
 document.getElementById("Button2").onclick = function(){
 	document.getElementById('Groshyk').src = "PIC/RightTop.png";
 	wallet = 1;
+	};
+	
+document.getElementById("SButton").onclick = function(){
+	if (soundOFF == 1) {
+	var sImg  = document.getElementById("SButtonImg").src = "PIC/SoundOff.png";
+	soundOFF = 0;
+	}
+	else {document.getElementById('SButtonImg').src = "PIC/SoundOn.png";
+	soundOFF = 1;}
 	};	
+	
 document.getElementById("StartButton").onclick = function(){
-       //runcointcounter = 1;
-	   
+       
+	   //audioCounter.play();
 	   (runcointcounter == 1) ? runcointcounter = 0:runcointcounter = 1;
        setTimeout(function Start(){
 	   if (runcointcounter == 1)
@@ -57,6 +76,9 @@ function CointCounter(cointer){
 	var i=1;
 	var max = 5;
 	
+	//counter sound	
+	if (soundOFF) audioCounter.play();
+	
 	setTimeout(function runcounter(){
 		
 	if (i < max)
@@ -64,12 +86,13 @@ function CointCounter(cointer){
                 (cointer < 2) ?
 		imgname = "PIC/countL" + i.toString() + ".png":
         imgname = "PIC/countR" + i.toString() + ".png";
+		
 		document.getElementById('counter'+cointer).src = imgname;
 		i++;
 		setTimeout(runcounter, delayCoint);
 		};
 	}, delayCoint);
-	//dalayCoint--;
+
 	};
 
 //монетка бeжит по желобу
@@ -83,7 +106,8 @@ function CointRun(cointer){
     imgcoint.style.position = 'absolute';	
 	imgcoint.style.left = x+'px';
 	imgcoint.style.top = y+'px';
-	
+	//sound audioCointRun
+	if (soundOFF) audioCointRun.play();
 	document.body.append(imgcoint);	
 	//var imgname = '';
 	var i=0;
@@ -100,10 +124,12 @@ function CointRun(cointer){
 	}, delayCoint);
 		setTimeout(()=>{
 		if (wallet == cointer){
+		if (soundOFF) audioCointPlus.play();
 		score++;
 		document.getElementById('score').textContent = "Собрано: "+score;
 		}
 		else {
+		if (soundOFF) audioCointLost.play();
 		badscore++; 
 		document.getElementById('badscore').textContent = "Потеряно: "+badscore;
 		};
