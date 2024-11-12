@@ -1,7 +1,10 @@
 body {
 font-family: sans-serif;
-
+font-style: Italic;
 color: green;
 letter-spacing: 0.1em;
 font-size: 150%;
+}
+.status{
+color: white;
 }
