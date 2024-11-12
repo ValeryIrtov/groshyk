@@ -19,8 +19,8 @@ const audioCointRun = new Audio("coins-dropped-1_mkw1uzv_1.mp3");
 const audioCointPlus = new Audio("Moneta-sobrana.mp3");
 const audioCointLost = new Audio("Moneta-Upala.mp3");
 
-// document.documentElement.requestFullScreen();
-//screen.lockOrientation("landscape");
+
+
 document.getElementById("Button3").onclick = function(){
 	document.getElementById("Groshyk").src = "PIC/LeftTop.png";
 	wallet = 2;
@@ -57,6 +57,19 @@ document.getElementById("StartButton").onclick = function(){
            document.getElementById("status").textContent = "Пауза";
            }
            else {
+           //
+           locOrientation = screen.lockOrientation ||
+           screen.mozLockOrientation ||
+           screen.msLockOrientation || screen.orientation.lock;
+           locOrientation('landscape');
+           // document.documentElement.requestFullScreen();
+           //screen.lockOrientation("landscape");
+           //screen.addEventListener("orientationchange", function () {
+           //  console.log("The orientation of the screen is: " + screen.orientation);
+           //  });
+           // document.documentElement.requestFullScreen();
+           //screen.lockOrientation("landscape");
+
            runcointcounter = 1;
            var startIm = document.getElementById("StartButtonImg").src = "PIC/StartP.png";
            document.getElementById("status").textContent = "Игра";
