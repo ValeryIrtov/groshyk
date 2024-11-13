@@ -58,18 +58,26 @@ document.getElementById("StartButton").onclick = function(){
            }
            else {
            //
-           locOrientation = screen.lockOrientation ||
-           screen.mozLockOrientation ||
-           screen.msLockOrientation || screen.orientation.lock;
+          // locOrientation = screen.lockOrientation ||
+          // screen.mozLockOrientation ||
+          // screen.msLockOrientation || screen.orientation.lock;
+          //locOrientation('landscape');
+            function fullScreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+    locOrientation = screen.lockOrientation;
+  } else if(element.webkitrequestFullscreen) {
+    element.webkitRequestFullscreen();
+    screen.orientation.lock;
+  } else if(element.mozRequestFullscreen) {
+    element.mozRequestFullScreen();
+    screen.msLockOrientation;
+  }
+}           var html = document.documentElement;
+fullScreen(html);
            locOrientation('landscape');
-           // document.documentElement.requestFullScreen();
-           //screen.lockOrientation("landscape");
-           //screen.addEventListener("orientationchange", function () {
-           //  console.log("The orientation of the screen is: " + screen.orientation);
-           //  });
-           // document.documentElement.requestFullScreen();
-           //screen.lockOrientation("landscape");
 
+            //
            runcointcounter = 1;
            var startIm = document.getElementById("StartButtonImg").src = "PIC/StartP.png";
            document.getElementById("status").textContent = "Игра";
