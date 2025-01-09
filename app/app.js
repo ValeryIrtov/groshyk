@@ -6,6 +6,7 @@ var lostcoint; //счетчик упавших
 var delayCoint = 300;
 var delayCounter =  5000;
 var soundOFF = 1; //0 sound off
+
 //var arrCounter = [0,0,0,0]; // массив с признаками, что машинка запущена.
 //var arrPathCoint = [[670,195],[670,200],[670,200],[670,200],[650,203],[630,205],[600,209],[575,215],[570,230]];
 var arrPathCoint = [
@@ -63,19 +64,20 @@ document.getElementById("StartButton").onclick = function(){
           // screen.msLockOrientation || screen.orientation.lock;
           //locOrientation('landscape');
             function fullScreen(element) {
-  if(element.requestFullscreen) {
-    element.requestFullscreen();
-    locOrientation = screen.lockOrientation;
-  } else if(element.webkitrequestFullscreen) {
-    element.webkitRequestFullscreen();
-    screen.orientation.lock;
-  } else if(element.mozRequestFullscreen) {
-    element.mozRequestFullScreen();
-    screen.msLockOrientation;
-  }
-}           var html = document.documentElement;
-fullScreen(html);
-           locOrientation('landscape');
+            if(element.requestFullscreen) {
+                element.requestFullscreen();
+                  } else if(element.webkitrequestFullscreen) {
+                  element.webkitRequestFullscreen();
+
+                    } else if(element.mozRequestFullscreen) {
+                        element.mozRequestFullScreen();
+
+                          }
+                          };
+            var html = document.documentElement;
+            fullScreen(html);
+            //screen.lockOrientation("landscape");
+            //document.body.style.transform = 'rotate(90deg)';
 
             //
            runcointcounter = 1;
