@@ -5,15 +5,16 @@ var badscore = 0; //счетчик не пойманных
 var lostcoint; //счетчик упавших
 var delayCoint = 300;
 var delayCounter =  5000;
-var soundOFF = 1; //0 sound off
+var soundON = 1; //0 sound off
+var cointDown = 0; //0-монета поймана
 
 //var arrCounter = [0,0,0,0]; // массив с признаками, что машинка запущена.
 //var arrPathCoint = [[670,195],[670,200],[670,200],[670,200],[650,203],[630,205],[600,209],[575,215],[570,230]];
 var arrPathCoint = [
-[[110,314],[110,314],[110,314],[110,314],[110,314],[110,319],[130,321],[165,327],[205,334],[220,354],[220,354]],
-[[110,195],[110,195],[110,195],[110,195],[110,195],[110,200],[130,202],[165,208],[205,215],[220,235],[220,235]],
-[[670,195],[670,195],[670,195],[670,195],[670,195],[670,200],[650,202],[615,208],[575,215],[560,235],[560,235]],
-[[670,314],[670,314],[670,314],[670,314],[670,314],[670,319],[650,321],[615,327],[575,334],[560,354],[560,354]]];
+[[110,244],[110,239],[110,239],[110,239],[110,239],[110,239],[130,246],[165,252],[205,259],[220,276],[220,276]],
+[[110,125],[110,120],[110,120],[110,120],[110,120],[110,120],[130,127],[165,133],[205,140],[220,159],[220,159]],
+[[670,125],[670,120],[670,120],[670,120],[670,120],[670,120],[650,127],[615,133],[575,140],[565,159],[565,159]],
+[[670,244],[670,239],[670,239],[670,239],[670,239],[670,239],[650,246],[615,252],[575,259],[565,276],[565,276]]];
 
 const audioCounter = new Audio("cash-counter-machine-count-50-bills-1.mp3");
 const audioCointRun = new Audio("coins-dropped-1_mkw1uzv_1.mp3");
@@ -41,12 +42,12 @@ document.getElementById("Button2").onclick = function(){
 	};
 	
 document.getElementById("SButton").onclick = function(){
-	if (soundOFF == 1) {
+	if (soundON == 1) {
 	var sImg  = document.getElementById("SButtonImg").src = "PIC/SoundOff.png";
-	soundOFF = 0;
+	soundON = 0;
 	}
 	else {document.getElementById('SButtonImg').src = "PIC/SoundOn.png";
-	soundOFF = 1;}
+	soundON = 1;}
 	};	
 	
 document.getElementById("StartButton").onclick = function(){
@@ -111,7 +112,7 @@ function CointCounter(cointer){
 	var max = 5;
 	
 	//counter sound	
-	if (soundOFF) audioCounter.play();
+	if (soundON) audioCounter.play();
 	
 	setTimeout(function runcounter(){
 		
@@ -141,32 +142,56 @@ function CointRun(cointer){
 	imgcoint.style.left = x+'px';
 	imgcoint.style.top = y+'px';
 	//sound audioCointRun
-	if (soundOFF) audioCointRun.play();
+	if (soundON) audioCointRun.play();
 	document.body.append(imgcoint);	
 	//var imgname = '';
 	var i=0;
 	var max = 11;
+	var i2 = 0;
+	var	max2 = 3
 	setTimeout(function runcoint(){
 	if (i <= max)
 		{
 		imgcoint.src = "PIC/coint"+i+".png";
-		imgcoint.style.left = arrPathCoint[cointer][i][0]+'px';
 		imgcoint.style.top = arrPathCoint[cointer][i][1]+'px';
+		imgcoint.style.left = arrPathCoint[cointer][i][0]+'px';
 		i++;
 		setTimeout(runcoint, delayCoint);
 		};
 	}, delayCoint);
 		setTimeout(()=>{
 		if (wallet == cointer){
-		if (soundOFF) audioCointPlus.play();
+		if (soundON) audioCointPlus.play();
 		score++;
 		document.getElementById('score').textContent = "Собрано: "+score;
+		cointDown = 0;
 		}
 		else {
-		if (soundOFF) audioCointLost.play();
+		if (soundON) audioCointLost.play();
 		badscore++; 
 		document.getElementById('badscore').textContent = "Потеряно: "+badscore;
-		};
+		// потерянная монетка на полу
+		cointDown = 0; 
+			};
 		},delayCoint*11);
+		
+		//монета на полу
+		
+		
+		setTimeout(function cointdown(){
+		if (i2 <= max2){
+		if (wallet != cointer)
+		{
+		imgcoint.src = "PIC/coint"+i2+".png";
+		imgcoint.style.top = '350' +'px';
+		imgcoint.style.left = arrPathCoint[cointer][11][0]+'px';
+		i2++;
+		setTimeout(cointdown, delayCoint);
+		};
+		};
+		}, delayCoint*12);
+		
+		
+		
 		
 	};	
